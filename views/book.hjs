@@ -1,0 +1,7 @@
+{{<layout}}
+{{$content}}
+<img src="{{cover}}">
+<div>{{title}}</div>
+<div><esi:include src="https://super-book-inventory-test.herokuapp.com/stock/{{isbn}}" /></div>
+{{/content}}
+{{/layout}}

@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>{{ title }}</title>
+</head>
+<body>
+<header><esi:include src="https://kwasniew.github.io/menu.html" /></header>
+{{$content}}
+
+{{/content}}
+<footer><a href="https://kwasniew.github.io/footer.html" class="include"></a></footer>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+    $('.include').each(function() {
+        var element = $(this);
+        $.get(element.attr('href')).done(function(data) {
+            element.replaceWith(data);
+        });
+    });
+</script>
+</body>
+</html>
