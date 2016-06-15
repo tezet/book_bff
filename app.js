@@ -36,7 +36,8 @@ app.get('/book/:isbn', function(req, res, next) {
 
     req.esiOptions = {
         headers: {
-            'X-Request-ID': correlationId
+            "Accept:" "text/html",
+            'x-request-id': correlationId
         }
     };
 
