@@ -18,7 +18,8 @@ function logRequestTime(req, res, next) {
     eventStartTime = Date.now();
 
     res.on('finish', function () {
-        console.log('Request processing time [ms]: ', Date.now() - eventStartTime);
+        var correlationId = req.headers['x-request-id'] || Math.random();
+        console.log('Request processing time [ms]: '+ Date.now() - eventStartTime + 'correlation_id:' + correlationId);
     });
     next();
 }
