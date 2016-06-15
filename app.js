@@ -31,7 +31,14 @@ app.use(esiMiddleware({       onError: function(src, error) {
 
 app.get('/book/:isbn', function(req, res, next) {
 
- var correlationId = req.headers['x-request-id'];
+ var correlationId = req.headers['x-request-id'] || Math.random();
+
+
+    req.esiOptions = {
+        headers: {
+            'X-Request-ID': correlationId
+        }
+    };
 
   goodGuy('https://book-catalog-proxy-4.herokuapp.com/book?isbn=' + req.params.isbn).then(function(response) {
 
