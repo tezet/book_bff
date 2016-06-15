@@ -28,7 +28,10 @@ app.use(esiMiddleware({       onError: function(src, error) {
             return '<!-- GET ' + src + 'resulted in ' + error + '-->';
         }}));
 
+
 app.get('/book/:isbn', function(req, res, next) {
+
+ var correlationId = req.headers['x-request-id'];
 
   goodGuy('https://book-catalog-proxy-4.herokuapp.com/book?isbn=' + req.params.isbn).then(function(response) {
 
@@ -36,7 +39,7 @@ app.get('/book/:isbn', function(req, res, next) {
     var title = jp.value(body, '$..title');
     var cover = jp.value(body, '$..thumbnail');
 
-    res.render('book', {title: title, cover: cover, isbn: req.params.isbn, partials: {
+    res.render('book', {title: title, cover: cover, isbn: req.params.isbn, requestid: correlationId, partials: {
       layout: 'layout_file'
     }});
   }).catch(next);

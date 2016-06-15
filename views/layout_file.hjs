@@ -2,6 +2,7 @@
 <head>
 <title>{{ title }}</title>
 </head>
+<meta data-request-id='{{requestid}}'>
 <body>
 <header><esi:include src="https://kwasniew.github.io/menu.html" /></header>
 {{$content}}
