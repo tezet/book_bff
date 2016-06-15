@@ -13,12 +13,24 @@ var esiMiddleware = require('nodesi').middleware;
 
 var app = express();
 
+
+function logRequestTime(req, res, next) {
+    eventStartTime = Date.now();
+
+    res.on('finish', function () {
+        console.log('Request processing time [ms]: ', Date.now() - eventStartTime);
+    });
+    next();
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+app.use(logRequestTime);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,10 +41,11 @@ app.use(esiMiddleware({       onError: function(src, error) {
         }}));
 
 
+
 app.get('/book/:isbn', function(req, res, next) {
 
     var correlationId = req.headers['x-request-id'] || Math.random();
-    
+
     req.esiOptions = {
         headers: {
             "Accept": "text/html",
