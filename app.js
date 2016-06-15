@@ -31,17 +31,16 @@ app.use(esiMiddleware({       onError: function(src, error) {
 
 app.get('/book/:isbn', function(req, res, next) {
 
- var correlationId = req.headers['x-request-id'] || Math.random();
-
-
+    var correlationId = req.headers['x-request-id'] || Math.random();
+    
     req.esiOptions = {
         headers: {
             "Accept": "text/html",
-            'x-request-id': correlationId
+            'X-Request-ID': correlationId
         }
     };
 
-  goodGuy('https://book-catalog-proxy-4.herokuapp.com/book?isbn=' + req.params.isbn).then(function(response) {
+    goodGuy('https://book-catalog-proxy-4.herokuapp.com/book?isbn=' + req.params.isbn).then(function(response) {
 
     var body = JSON.parse(response.body);
     var title = jp.value(body, '$..title');
